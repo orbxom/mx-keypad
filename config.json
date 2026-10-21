@@ -195,24 +195,23 @@
           "sub": "+ push"
         },
         {
-          "label": "Plan",
-          "sub": "/plan",
-          "bg": "#7a3d1e",
+          "label": "Ready?",
+          "bg": "#a01010",
           "action": {
             "type": "prompt",
-            "text": "/plan",
+            "text": "/pr-ready",
             "submit": true
           }
         },
         {
           "label": "Merge",
+          "sub": "base",
           "bg": "#1f5130",
           "action": {
             "type": "prompt",
             "text": "/merge-base",
             "submit": true
-          },
-          "sub": "base"
+          }
         },
         {
           "label": "Draft PR",
@@ -252,12 +251,13 @@
           }
         },
         {
-          "label": "Ready?",
-          "bg": "#a01010",
+          "label": "Dictate",
+          "sub": "whispr",
+          "bg": "#5b2a86",
+          "fg": "#ffffff",
           "action": {
-            "type": "prompt",
-            "text": "/pr-ready",
-            "submit": true
+            "type": "command",
+            "command": "dbus-send --session --type=method_call --dest=com.openwhispr.App /com/openwhispr/App com.openwhispr.App.Toggle"
           }
         }
       ]
