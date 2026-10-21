@@ -1,0 +1,14 @@
+[Unit]
+Description=Logitech MX Creative Keypad daemon
+PartOf=graphical-session.target
+After=graphical-session.target ydotoold.service
+
+[Service]
+WorkingDirectory=%h/personal/mx-keypad
+Environment=PATH=%h/.local/bin:/usr/local/bin:/usr/bin:/bin:/snap/bin
+ExecStart=%h/.nvm/versions/node/v24.21.0/bin/node %h/personal/mx-keypad/keypad.js
+Restart=on-failure
+RestartSec=3
+
+[Install]
+WantedBy=graphical-session.target

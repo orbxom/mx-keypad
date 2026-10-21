@@ -1,0 +1,45 @@
+{
+  "brightness": 80,
+  "pages": [
+    {
+      "name": "Apps",
+      "keys": [
+        { "label": "Term", "sub": "kitty", "bg": "#1e3a5f", "run": "gtk-launch kitty-zellij" },
+        { "label": "Firefox", "bg": "#7a2e0e", "run": "firefox" },
+        { "label": "Chrome", "bg": "#1f5130", "run": "google-chrome" },
+        { "label": "Code", "bg": "#0b4a7a", "run": "code" },
+        { "label": "Slack", "bg": "#4a154b", "run": "slack" },
+        { "label": "Files", "bg": "#3d3d3d", "run": "nautilus --new-window" },
+        { "label": "Shot", "sub": "flameshot", "bg": "#5c3d00", "run": "flameshot gui" },
+        {
+          "label": "Mic",
+          "bg": "#1f5130",
+          "run": "wpctl set-mute @DEFAULT_AUDIO_SOURCE@ toggle",
+          "state": "wpctl get-volume @DEFAULT_AUDIO_SOURCE@ | grep -q MUTED",
+          "on": { "label": "Mic", "sub": "MUTED", "bg": "#a01010" }
+        },
+        { "label": "Lock", "bg": "#222222", "run": "loginctl lock-session" }
+      ]
+    },
+    {
+      "name": "Media",
+      "keys": [
+        { "label": "Prev", "bg": "#2b2b4a", "run": "ydotool key 165:1 165:0" },
+        { "label": "Play", "sub": "pause", "bg": "#2b4a2b", "run": "ydotool key 164:1 164:0" },
+        { "label": "Next", "bg": "#2b2b4a", "run": "ydotool key 163:1 163:0" },
+        { "label": "Vol -", "bg": "#3d3d3d", "run": "ydotool key 114:1 114:0" },
+        {
+          "label": "Mute",
+          "bg": "#3d3d3d",
+          "run": "ydotool key 113:1 113:0",
+          "state": "wpctl get-volume @DEFAULT_AUDIO_SINK@ | grep -q MUTED",
+          "on": { "label": "Mute", "sub": "MUTED", "bg": "#a01010" }
+        },
+        { "label": "Vol +", "bg": "#3d3d3d", "run": "ydotool key 115:1 115:0" },
+        { "label": "Dim", "sub": "keypad", "bg": "#222222", "builtin": "brightness-down" },
+        { "label": "Super", "sub": "overview", "bg": "#222222", "run": "ydotool key 125:1 125:0" },
+        { "label": "Bright", "sub": "keypad", "bg": "#222222", "builtin": "brightness-up" }
+      ]
+    }
+  ]
+}

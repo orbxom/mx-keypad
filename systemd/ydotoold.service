@@ -1,0 +1,14 @@
+# Overrides /usr/lib/systemd/user/ydotoold.service (apt's 0.1.8) with a v1.0.4 build in ~/.local/bin.
+[Unit]
+Description=ydotoold v1.0.4 (built from source)
+
+[Service]
+Type=simple
+Restart=always
+ExecStart=%h/.local/bin/ydotoold
+ExecReload=/usr/bin/kill -HUP $MAINPID
+KillMode=process
+TimeoutSec=180
+
+[Install]
+WantedBy=default.target

@@ -1,0 +1,6 @@
+# Logitech MX Creative Console: let the logged-in desktop user open the hidraw nodes.
+# Keypad (c354) and Dialpad (bc00), over USB and over Bluetooth/Bolt.
+KERNEL=="hidraw*", ATTRS{idVendor}=="046d", ATTRS{idProduct}=="c354", MODE:="660", TAG+="uaccess"
+KERNEL=="hidraw*", KERNELS=="*:046D:C354.*", MODE:="660", TAG+="uaccess"
+KERNEL=="hidraw*", ATTRS{idVendor}=="046d", ATTRS{idProduct}=="bc00", MODE:="660", TAG+="uaccess"
+KERNEL=="hidraw*", KERNELS=="*:046D:BC00.*", MODE:="660", TAG+="uaccess"
