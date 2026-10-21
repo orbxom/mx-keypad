@@ -1,13 +1,14 @@
 // Daemon for the Logitech MX Creative Keypad: draws labelled keys from config.json,
-// runs each key's shell command on press, and flips between pages with the page buttons.
-import { spawn, exec } from 'node:child_process'
+// runs each key's action on press, and flips between pages with the page buttons.
+import { exec } from 'node:child_process'
 import { readFileSync, watch } from 'node:fs'
 import { fileURLToPath } from 'node:url'
-import sharp from 'sharp'
 import { listMXCreativeConsoleDevices, openMxCreativeConsole } from '@logitech-mx-creative-console/node'
+import { renderKey } from './render.js'
+import { executeAction } from './actions.js'
 
+const CONFIG_DIR = fileURLToPath(new URL('.', import.meta.url))
 const CONFIG_PATH = fileURLToPath(new URL('config.json', import.meta.url))
-const KEY_SIZE = 118
 const KEY_COUNT = 9
 const RECONNECT_MS = 2000
 const STATE_POLL_MS = 1500
@@ -24,24 +25,6 @@ function loadConfig() {
 	return parsed
 }
 
-function escapeXml(s) {
-	return String(s).replace(/[<>&'"]/g, (c) => ({ '<': '&lt;', '>': '&gt;', '&': '&amp;', "'": '&apos;', '"': '&quot;' })[c])
-}
-
-async function renderKey(key, pressed) {
-	const label = escapeXml(key.label ?? '')
-	const sub = escapeXml(key.sub ?? '')
-	const fontSize = label.length <= 4 ? 34 : label.length <= 6 ? 26 : 20
-	const labelY = sub ? 62 : 70
-	const svg = `<svg xmlns="http://www.w3.org/2000/svg" width="${KEY_SIZE}" height="${KEY_SIZE}">
-		<rect width="100%" height="100%" fill="${pressed ? '#ffffff' : (key.bg ?? '#000000')}"/>
-		<text x="50%" y="${labelY}" font-family="Ubuntu, sans-serif" font-weight="bold" font-size="${fontSize}"
-			fill="${pressed ? '#000000' : (key.fg ?? '#ffffff')}" text-anchor="middle">${label}</text>
-		${sub ? `<text x="50%" y="92" font-family="Ubuntu, sans-serif" font-size="16" fill="${pressed ? '#333333' : '#cccccc'}" text-anchor="middle">${sub}</text>` : ''}
-	</svg>`
-	return sharp(Buffer.from(svg)).flatten().raw().toBuffer()
-}
-
 // The key as it should look now: its `on` overrides apply while its state command reports true.
 function effectiveKey(pageIndex, keyIndex) {
 	const key = config.pages[pageIndex]?.keys?.[keyIndex]
@@ -53,17 +36,11 @@ async function drawKey(keyIndex, pressed = false) {
 	if (!device) return
 	const key = effectiveKey(page, keyIndex)
 	if (!key) return device.clearKey(keyIndex)
-	await device.fillKeyBuffer(keyIndex, await renderKey(key, pressed))
+	await device.fillKeyBuffer(keyIndex, await renderKey(key, { pressed, format: 'raw', baseDir: CONFIG_DIR }), { format: 'rgb' })
 }
 
 async function drawPage() {
 	for (let i = 0; i < KEY_COUNT; i++) await drawKey(i)
-}
-
-function runCommand(cmd) {
-	const child = spawn('sh', ['-c', cmd], { detached: true, stdio: 'ignore' })
-	child.on('error', (e) => console.error(`command failed: ${cmd}:`, e.message))
-	child.unref()
 }
 
 function checkState(cmd) {
@@ -98,13 +75,17 @@ async function onDown(control) {
 		await pollState()
 		return drawPage()
 	}
-	const key = config.pages[page]?.keys?.[control.index]
+	const key = effectiveKey(page, control.index)
 	if (!key) return
 	console.log(`key ${control.index} (${key.label}) pressed`)
 	await drawKey(control.index, true)
-	if (key.builtin === 'brightness-up') await setBrightness(brightness + 10)
-	else if (key.builtin === 'brightness-down') await setBrightness(brightness - 10)
-	else if (key.run) runCommand(key.run)
+	executeAction(key, { onBuiltin })
+}
+
+function onBuiltin(name) {
+	if (name === 'brightness-up') return setBrightness(brightness + 10)
+	if (name === 'brightness-down') return setBrightness(brightness - 10)
+	throw new Error(`unknown builtin: ${name}`)
 }
 
 async function onUp(control) {

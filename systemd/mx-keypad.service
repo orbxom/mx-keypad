@@ -9,6 +9,7 @@ Environment=PATH=%h/.local/bin:/usr/local/bin:/usr/bin:/bin:/snap/bin
 ExecStart=%h/.nvm/versions/node/v24.21.0/bin/node %h/personal/mx-keypad/keypad.js
 Restart=on-failure
 RestartSec=3
+KillMode=process
 
 [Install]
 WantedBy=graphical-session.target

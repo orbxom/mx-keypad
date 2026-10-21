@@ -1,0 +1,11 @@
+[Desktop Entry]
+Type=Application
+Name=MX Keypad Editor
+Comment=Edit the keys of the Logitech MX Creative Keypad
+Exec=/usr/bin/python3 /home/zknowles/personal/mx-keypad/app/mx_keypad_editor.py
+Icon=input-keyboard
+Terminal=false
+Categories=Utility;Settings;
+Keywords=keypad;logitech;mx;creative;console;buttons;
+StartupNotify=true
+StartupWMClass=io.github.orbxom.MxKeypadEditor
