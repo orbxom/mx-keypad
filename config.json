@@ -4,54 +4,431 @@
     {
       "name": "Apps",
       "keys": [
-        { "label": "Term", "sub": "kitty", "bg": "#1e3a5f", "action": { "type": "app", "desktopId": "kitty-zellij.desktop" } },
-        { "label": "Firefox", "bg": "#7a2e0e", "action": { "type": "command", "command": "firefox" } },
-        { "label": "Chrome", "bg": "#1f5130", "action": { "type": "command", "command": "google-chrome" } },
-        { "label": "Code", "bg": "#0b4a7a", "action": { "type": "command", "command": "code" } },
-        { "label": "Slack", "bg": "#4a154b", "action": { "type": "command", "command": "slack" } },
-        { "label": "Files", "bg": "#3d3d3d", "action": { "type": "command", "command": "nautilus --new-window" } },
-        { "label": "Shot", "sub": "flameshot", "bg": "#5c3d00", "action": { "type": "command", "command": "flameshot gui" } },
+        {
+          "label": "Fabel",
+          "bg": "#ff7800",
+          "action": {
+            "type": "prompt",
+            "text": "/model fable",
+            "submit": true,
+            "restoreClipboard": false
+          }
+        },
+        {
+          "label": "Opus",
+          "bg": "#7a2e0e",
+          "action": {
+            "type": "prompt",
+            "text": "/model opus",
+            "submit": true,
+            "restoreClipboard": false
+          }
+        },
+        {
+          "label": "Chrome",
+          "bg": "#1f5130",
+          "action": {
+            "type": "command",
+            "command": "google-chrome"
+          }
+        },
+        {
+          "label": "Code",
+          "bg": "#0b4a7a",
+          "action": {
+            "type": "command",
+            "command": "code"
+          }
+        },
+        {
+          "label": "Slack",
+          "bg": "#4a154b",
+          "action": {
+            "type": "command",
+            "command": "slack"
+          }
+        },
+        {
+          "label": "Files",
+          "bg": "#3d3d3d",
+          "action": {
+            "type": "command",
+            "command": "nautilus --new-window"
+          }
+        },
+        {
+          "label": "Shot",
+          "sub": "flameshot",
+          "bg": "#5c3d00",
+          "action": {
+            "type": "command",
+            "command": "flameshot gui"
+          }
+        },
         {
           "label": "Mic",
           "bg": "#1f5130",
-          "action": { "type": "command", "command": "wpctl set-mute @DEFAULT_AUDIO_SOURCE@ toggle" },
+          "action": {
+            "type": "command",
+            "command": "wpctl set-mute @DEFAULT_AUDIO_SOURCE@ toggle"
+          },
           "state": "wpctl get-volume @DEFAULT_AUDIO_SOURCE@ | grep -q MUTED",
-          "on": { "label": "Mic", "sub": "MUTED", "bg": "#a01010" }
+          "on": {
+            "label": "Mic",
+            "sub": "MUTED",
+            "bg": "#a01010"
+          }
         },
-        { "label": "Lock", "bg": "#222222", "action": { "type": "command", "command": "loginctl lock-session" } }
+        {
+          "label": "Dictate",
+          "sub": "whispr",
+          "bg": "#5b2a86",
+          "fg": "#ffffff",
+          "action": {
+            "type": "command",
+            "command": "dbus-send --session --type=method_call --dest=com.openwhispr.App /com/openwhispr/App com.openwhispr.App.Toggle"
+          }
+        }
+      ]
+    },
+    {
+      "name": "Session",
+      "keys": [
+        {
+          "label": "Opus",
+          "bg": "#7a2e0e",
+          "action": {
+            "type": "prompt",
+            "text": "/model opus",
+            "submit": true
+          }
+        },
+        {
+          "label": "Fable",
+          "bg": "#ff7800",
+          "action": {
+            "type": "prompt",
+            "text": "/model fable",
+            "submit": true
+          }
+        },
+        {
+          "label": "Sonnet",
+          "bg": "#2e4f7a",
+          "action": {
+            "type": "prompt",
+            "text": "/model sonnet",
+            "submit": true
+          }
+        },
+        {
+          "label": "Medium",
+          "bg": "#1e4a4a",
+          "action": {
+            "type": "prompt",
+            "text": "/effort medium",
+            "submit": true
+          },
+          "sub": "effort"
+        },
+        {
+          "label": "High",
+          "bg": "#2d6b6b",
+          "action": {
+            "type": "prompt",
+            "text": "/effort high",
+            "submit": true
+          },
+          "sub": "effort"
+        },
+        {
+          "label": "Yes",
+          "bg": "#1f5130",
+          "action": {
+            "type": "prompt",
+            "text": "yes",
+            "submit": true
+          }
+        },
+        {
+          "label": "Status",
+          "bg": "#3d3d3d",
+          "action": {
+            "type": "prompt",
+            "text": "How are we going?",
+            "submit": true
+          }
+        },
+        {
+          "label": "Doc-share",
+          "bg": "#5b2a86",
+          "action": {
+            "type": "prompt",
+            "text": "Write it up as a single-page HTML doc and doc-share it",
+            "submit": true
+          }
+        },
+        null
+      ]
+    },
+    {
+      "name": "Ship",
+      "keys": [
+        {
+          "label": "Implement",
+          "bg": "#0b4a7a",
+          "action": {
+            "type": "prompt",
+            "text": "/implement-ticket ",
+            "submit": false
+          },
+          "sub": "ticket…"
+        },
+        {
+          "label": "Commit",
+          "bg": "#1f5130",
+          "action": {
+            "type": "prompt",
+            "text": "Commit and push",
+            "submit": true
+          },
+          "sub": "+ push"
+        },
+        {
+          "label": "Plan",
+          "sub": "/plan",
+          "bg": "#7a3d1e",
+          "action": {
+            "type": "prompt",
+            "text": "/plan",
+            "submit": true
+          }
+        },
+        {
+          "label": "Merge",
+          "bg": "#1f5130",
+          "action": {
+            "type": "prompt",
+            "text": "/merge-base",
+            "submit": true
+          },
+          "sub": "base"
+        },
+        {
+          "label": "Draft PR",
+          "bg": "#0b4a7a",
+          "action": {
+            "type": "prompt",
+            "text": "Create a draft PR",
+            "submit": true
+          }
+        },
+        {
+          "label": "Review",
+          "bg": "#5c3d00",
+          "action": {
+            "type": "prompt",
+            "text": "Code review this PR",
+            "submit": true
+          }
+        },
+        {
+          "label": "Review",
+          "bg": "#5c3d00",
+          "action": {
+            "type": "prompt",
+            "text": "/review-fix",
+            "submit": true
+          },
+          "sub": "+ fix"
+        },
+        {
+          "label": "Stack QA",
+          "bg": "#4a154b",
+          "action": {
+            "type": "prompt",
+            "text": "/stack-verify",
+            "submit": true
+          }
+        },
+        {
+          "label": "Ready?",
+          "bg": "#a01010",
+          "action": {
+            "type": "prompt",
+            "text": "/pr-ready",
+            "submit": true
+          }
+        }
       ]
     },
     {
       "name": "Media",
       "keys": [
-        { "label": "Prev", "bg": "#2b2b4a", "action": { "type": "keys", "codes": [165] } },
-        { "label": "Play", "sub": "pause", "bg": "#2b4a2b", "action": { "type": "keys", "codes": [164] } },
-        { "label": "Next", "bg": "#2b2b4a", "action": { "type": "keys", "codes": [163] } },
-        { "label": "Vol -", "bg": "#3d3d3d", "action": { "type": "keys", "codes": [114] } },
+        {
+          "label": "Prev",
+          "bg": "#2b2b4a",
+          "action": {
+            "type": "keys",
+            "codes": [
+              165
+            ]
+          }
+        },
+        {
+          "label": "Play",
+          "sub": "pause",
+          "bg": "#2b4a2b",
+          "action": {
+            "type": "keys",
+            "codes": [
+              164
+            ]
+          }
+        },
+        {
+          "label": "Next",
+          "bg": "#2b2b4a",
+          "action": {
+            "type": "keys",
+            "codes": [
+              163
+            ]
+          }
+        },
+        {
+          "label": "Vol -",
+          "bg": "#3d3d3d",
+          "action": {
+            "type": "keys",
+            "codes": [
+              114
+            ]
+          }
+        },
         {
           "label": "Mute",
           "bg": "#3d3d3d",
-          "action": { "type": "keys", "codes": [113] },
+          "action": {
+            "type": "keys",
+            "codes": [
+              113
+            ]
+          },
           "state": "wpctl get-volume @DEFAULT_AUDIO_SINK@ | grep -q MUTED",
-          "on": { "label": "Mute", "sub": "MUTED", "bg": "#a01010" }
+          "on": {
+            "label": "Mute",
+            "sub": "MUTED",
+            "bg": "#a01010"
+          }
         },
-        { "label": "Vol +", "bg": "#3d3d3d", "action": { "type": "keys", "codes": [115] } },
-        { "label": "Dim", "sub": "keypad", "bg": "#222222", "action": { "type": "builtin", "name": "brightness-down" } },
-        { "label": "Super", "sub": "overview", "bg": "#222222", "action": { "type": "keys", "codes": [125] } },
-        { "label": "Bright", "sub": "keypad", "bg": "#222222", "action": { "type": "builtin", "name": "brightness-up" } }
+        {
+          "label": "Vol +",
+          "bg": "#3d3d3d",
+          "action": {
+            "type": "keys",
+            "codes": [
+              115
+            ]
+          }
+        },
+        {
+          "label": "Dim",
+          "sub": "keypad",
+          "bg": "#222222",
+          "action": {
+            "type": "builtin",
+            "name": "brightness-down"
+          }
+        },
+        {
+          "label": "Super",
+          "sub": "overview",
+          "bg": "#222222",
+          "action": {
+            "type": "keys",
+            "codes": [
+              125
+            ]
+          }
+        },
+        {
+          "label": "Bright",
+          "sub": "keypad",
+          "bg": "#222222",
+          "action": {
+            "type": "builtin",
+            "name": "brightness-up"
+          }
+        }
       ]
     },
     {
       "name": "AI",
       "keys": [
-        { "label": "Whispr", "sub": "dictate", "bg": "#4a2b6a", "action": { "type": "command", "command": "dbus-send --session --type=method_call --dest=com.openwhispr.App /com/openwhispr/App com.openwhispr.App.Toggle" } },
-        { "label": "Agent", "sub": "voice", "bg": "#4a2b6a", "action": { "type": "command", "command": "dbus-send --session --type=method_call --dest=com.openwhispr.App /com/openwhispr/App com.openwhispr.App.ToggleVoiceAgent" } },
+        {
+          "label": "Whispr",
+          "sub": "dictate",
+          "bg": "#4a2b6a",
+          "action": {
+            "type": "command",
+            "command": "dbus-send --session --type=method_call --dest=com.openwhispr.App /com/openwhispr/App com.openwhispr.App.Toggle"
+          }
+        },
+        {
+          "label": "Agent",
+          "sub": "voice",
+          "bg": "#4a2b6a",
+          "action": {
+            "type": "command",
+            "command": "dbus-send --session --type=method_call --dest=com.openwhispr.App /com/openwhispr/App com.openwhispr.App.ToggleVoiceAgent"
+          }
+        },
         null,
-        { "label": "Esc", "sub": "claude", "bg": "#7a3d1e", "action": { "type": "keys", "codes": [1] } },
-        { "label": "Mode", "sub": "shift+tab", "bg": "#7a3d1e", "action": { "type": "keys", "codes": [42, 15] } },
+        {
+          "label": "Esc",
+          "sub": "claude",
+          "bg": "#7a3d1e",
+          "action": {
+            "type": "keys",
+            "codes": [
+              1
+            ]
+          }
+        },
+        {
+          "label": "Mode",
+          "sub": "shift+tab",
+          "bg": "#7a3d1e",
+          "action": {
+            "type": "keys",
+            "codes": [
+              42,
+              15
+            ]
+          }
+        },
         null,
-        { "label": "Review", "sub": "prompt", "bg": "#1e4a4a", "action": { "type": "prompt", "text": "Review the uncommitted changes for bugs and suggest fixes.", "submit": false } },
-        { "label": "Tests", "sub": "prompt", "bg": "#1e4a4a", "action": { "type": "prompt", "text": "Run the test suite and fix any failures.", "submit": false } },
+        {
+          "label": "Review",
+          "sub": "prompt",
+          "bg": "#1e4a4a",
+          "action": {
+            "type": "prompt",
+            "text": "Review the uncommitted changes for bugs and suggest fixes.",
+            "submit": false
+          }
+        },
+        {
+          "label": "Tests",
+          "sub": "prompt",
+          "bg": "#1e4a4a",
+          "action": {
+            "type": "prompt",
+            "text": "Run the test suite and fix any failures.",
+            "submit": false
+          }
+        },
         null
       ]
     }
