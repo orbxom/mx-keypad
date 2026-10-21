@@ -195,7 +195,7 @@
           "sub": "+ push"
         },
         {
-          "label": "Ready?",
+          "label": "PR Ready?",
           "bg": "#a01010",
           "action": {
             "type": "prompt",
